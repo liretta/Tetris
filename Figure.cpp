@@ -2,32 +2,9 @@
 #include "Figure.h"
 
 
-Figure::Figure():iCurVersion(0), iCurTop(0), iCurLeft(0), iCurRight(0), iCurBottom(0)
+Figure::Figure():iCurVersion(0), iCurTop(0), iCurLeft((BOARDHEIGHT*BOXSIZE)-BOXSIZE), iCurRight(0), iCurBottom(0)
 {
-	//create arrey with versions of figure 
-	pArVersion = new bool** [I_VERSION];
-	for (int i = 0; i < I_VERSION;++i)
-	{
-		pArVersion[i] = new bool*[BOXNUMBER]();
-		for (int j = 0; j < BOXNUMBER; ++j)
-			pArVersion[i][j] = new bool[BOXNUMBER] (); //there is one box in template
-	}
 
-	//initialize versions of figure (exmpl. figure "I") - указываем, какие "ячейки" будут заполненны цветом
-	//version 0 (look on first index)
-	pArVersion[0][0][2] = 1;
-	pArVersion[0][1][2] = 1;
-	pArVersion[0][2][2] = 1;
-	pArVersion[0][3][2] = 1;
-
-	//version 1
-	pArVersion[1][2][0] = 1;
-	pArVersion[1][2][1] = 1;
-	pArVersion[1][2][2] = 1;
-	pArVersion[1][2][3] = 1;
-
-	hRectangelBrush = CreateSolidBrush(GREEN);
-	hFramePen = CreatePen(PS_SOLID, 2, LIGHTGREEN);
 }
 
 Figure::~Figure()
@@ -51,33 +28,36 @@ Figure::~Figure()
 
 }
 
-void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int right)
+void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int right, int iForDraw)
 {
-	//HPEN hInvisiblePen = CreatePen(PS_SOLID, 2, WHITE);
-	//HBRUSH hInvisibleBrush = CreateSolidBrush(WHITE);
-
 	iCurVersion = iVersion;
 
 	HDC hDC = hDCfromMain;
 	HBRUSH hOldBr = (HBRUSH)SelectObject(hDC, hRectangelBrush);
 	HPEN hOldPen = (HPEN)SelectObject(hDC, hFramePen);
 
-
 	int x = left, y = right;
 	iCurTop = y;
 	iCurLeft = x;
+	//iCurYForDraw = y;
 	for (int i = 0; i < BOXNUMBER; ++i)
 	{
 		y = right;
 		for (int j = 0; j < BOXNUMBER; ++j)
 		{
-			if (pArVersion[iCurVersion][i][j]==1)
+			if (pArVersion[iCurVersion][i][j] == 1)
+			{
 				Rectangle(hDC, x, y, x + BOXSIZE, y + BOXSIZE);
+				iCurYForDraw = y;
+			}
 			y += BOXSIZE;
 		}
 		x += BOXSIZE;
 	}
 
+	//проверка - если icur не дно, тогда увеличиваем. сделай тернально
+	iCurYForDraw +=BOXSIZE;
+	y += BOXSIZE; //after loop y = top-point of last box. But we need bottom, so add boxsize
 	iCurRight = x;
 	iCurBottom = y;
 
@@ -93,6 +73,8 @@ int const Figure::GetTop() { return iCurTop; };
 int const Figure::GetLeft() { return iCurLeft; };
 int const Figure::GetBottom() { return iCurBottom; };
 int const Figure::GetRight() { return iCurRight; };
+int const Figure::GetYForDraw() { return iCurYForDraw; };
+
 RECT const Figure::GetFigureRect()
 {
 	RECT temp;
@@ -105,10 +87,11 @@ RECT const Figure::GetFigureRect()
 };
 
 int const Figure::GetCurVersion() { return iCurVersion; };
-void Figure::SetNewYCoordinate(int y)
+void Figure::SetNewYCoordinate(int y, int yDraw)
 {
 	iCurTop = y;
 	iCurBottom = y + (BOXNUMBER*BOXSIZE);
+	iCurYForDraw = yDraw;
 	
 };
 

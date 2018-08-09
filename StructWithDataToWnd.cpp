@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "StructWithDataToWnd.h"
 
-DataForFunc::DataForFunc() : fCurFigure(0), fNextFigure(0), IsFigureFalling(0), isGameOn(0)
+DataForFunc::DataForFunc() : fCurFigure(nullptr), fNextFigure(nullptr), IsFigureFalling(0), isGameOn(0)
 {
-	fCurFigure = new Figure;
-	fNextFigure = new Figure;
+	/*fCurFigure = new Figure;
+	fNextFigure = new Figure;*/
 
 };
 

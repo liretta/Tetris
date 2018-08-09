@@ -21,8 +21,8 @@ void GetNewFigure(DataForFunc *data)
 	srand((unsigned int)time(0));
 	//srand((unsigned int)time);
 	iForRand = rand() % COUNTFIGURE + 1;
-
-	delete data->fCurFigure;
+	if (data->fCurFigure != nullptr)
+		delete data->fCurFigure;
 
 	switch (iForRand)
 	{
@@ -82,63 +82,3 @@ void GetNewFigure(DataForFunc *data)
 //	
 //}
 
-//void GetNewFigure(DataForFunc *data)
-//{
-//	Figure *pTemp;
-//	int iForRand;
-//	static int iCounter = 0;
-//	iCounter++;
-//	srand((unsigned int)time);
-//	iForRand = rand() % COUNTFIGURE + 1;
-//
-//	delete data->fCurFigure;
-//
-//	switch (iForRand)
-//	{
-//	case S_FIGURE:
-//		pTemp = new FigureS;
-//		pTemp->SetCurVersion(rand() % S_VERSION);
-//		break;
-//	case T_FIGURE:
-//		pTemp = new FigureT;
-//		pTemp->SetCurVersion(rand() % T_VERSION);
-//		break;
-//	case Z_FIGURE:
-//		pTemp = new FigureZ;
-//		pTemp->SetCurVersion(rand() % Z_VERSION);
-//		break;
-//	case J_FIGURE:
-//	{
-//		pTemp = new FigureJ;
-//		pTemp->SetCurVersion(rand() % J_VERSION);
-//		break;
-//	}
-//	case L_FIGURE:
-//		pTemp = new FigureL;
-//		pTemp->SetCurVersion(rand() % L_VERSION);
-//		break;
-//	case I_FIGURE:
-//	{
-//		pTemp = new FigureI;
-//		pTemp->SetCurVersion(rand() % I_VERSION);
-//		break;
-//	}
-//	case O_FIGURE:
-//		pTemp = new FigureO;
-//		pTemp->SetCurVersion(O_VERSION-1);
-//		break;
-//	default:
-//		pTemp = new FigureI;
-//		pTemp->SetCurVersion(rand() % I_VERSION);
-//		break;
-//	}
-//
-//	
-//	data->fCurFigure = pTemp;
-//	data->IsFigureFalling = true;
-//
-//	WARNING!!! “”“ ќЅя«ј“≈Ћ№Ќќ —ƒ≈Ћј≈ћ ѕ–≈—¬ќ≈Ќ»≈ NEXT FIGURE!! а когда curFigure перестанет падать, тогда перенесем в нее 
-//	фигурку из некста
-//	
-//		
-//}

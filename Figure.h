@@ -8,16 +8,17 @@ class Figure
 
 public:
 	Figure(); 
-	virtual ~Figure();
-	virtual int const GetTop();
-	virtual int const GetLeft();
-	virtual int const GetBottom();
-	virtual int const GetRight();
-	virtual RECT const GetFigureRect();
-	virtual void Draw(HDC &hDC, HWND &hWnd, int iVersion=0, int x = 0, int y = 0);
-	virtual int const GetCurVersion();
+	virtual ~Figure()=0;
+	int const GetTop();
+	int const GetLeft();
+	int const GetBottom();
+	int const GetRight();
+	int const GetYForDraw(); 
+	RECT const GetFigureRect();
+	void Draw(HDC &hDC, HWND &hWnd, int iVersion=0, int x = 0, int y = 0, int iCurYForDraw = 0);
+	int const GetCurVersion();
 	void SetCurVersion(int vers);
-	virtual void SetNewYCoordinate(int y);
+	void SetNewYCoordinate(int y, int yForDraw);
 	//дописать сет х-координат
 
 protected:
@@ -25,10 +26,10 @@ protected:
 	HBRUSH hRectangelBrush;
 	HPEN hFramePen;
 	int iCurVersion;
-	int iCurTop; //позже заменим на переменную типа rect
+	int iCurTop; 
 	int iCurLeft;
 	int iCurRight;
 	int iCurBottom;
-	int iCurYForDraw;
+	int iCurYForDraw;//bottom-coordinate of last full box in figure
 
 };
