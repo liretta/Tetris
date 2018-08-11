@@ -10,6 +10,7 @@ void GameOn(DataForFunc *data)
 	//SendMessage(0, SET_STRUCT, (WPARAM)data, NULL);
 	GetNewFigure(data);
 	data->isGameOn = true;
+	data->mpBoard = new Board;
 	
 }
 
@@ -72,13 +73,42 @@ void GetNewFigure(DataForFunc *data)
 
 }
 
-//bool IsPisitionValid(DataForFunc *data, int y, int x = 0)
-//{
-//	int tempY = data->fCurFigure->GetBottom();
-//
-//	if()
-//
-//	тут будет проверка на наличие свободного места при повороте
-//	
-//}
+void MoveDown(DataForFunc *pData)
+{
+	if (pData->isGameOn == true && pData->IsFigureFalling == true)
+	{
+		//int tempY = tempData->fCurFigure->GetBottom();
+		int tempY = pData->fCurFigure->GetYForDraw() + BOXSIZE;
+
+
+		//blank for checking valid pisition on board:
+		//int tempX = tempData->fCurFigure->GetLeft();
+		//int tempTop = tempData->fCurFigure->GetTop() + BOXSIZE;
+		//bool tempBool = tempData->mpBoard->IsValidPosition(tempData->fCurFigure, tempTop, tempX);
+
+
+		if (tempY >height)
+		{
+			tempData->IsFigureFalling = false;
+			//function AddToBoard(
+			GetNewFigure(tempData);
+			y = tempData->fCurFigure->GetTop() + BOXSIZE;
+			tempData->fCurFigure->SetNewYCoordinate(y, tempY);
+		}
+		else
+		{
+			y = tempData->fCurFigure->GetTop() + BOXSIZE;
+			tempData->fCurFigure->SetNewYCoordinate(y, tempY);
+
+		}
+
+
+		//tempRect.top = tempData->fCurFigure->GetTop(); //
+		//tempRect.left = tempData->fCurFigure->GetLeft();
+		//tempRect.right = tempData->fCurFigure->GetRight();
+		//tempRect.bottom = tempData->fCurFigure->GetBottom();
+
+		//InvalidateRect(hWnd, &tempRect, TRUE);
+		InvalidateRect(hWnd, NULL, TRUE);
+}
 

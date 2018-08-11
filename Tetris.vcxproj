@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Basic_Figure.h" />
+    <ClInclude Include="Board.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="Enumerations.h" />
     <ClInclude Include="Figure.h" />
@@ -166,6 +168,8 @@
     <ClInclude Include="Tetris.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Basic_Figure.cpp" />
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="FigureI.cpp" />
     <ClCompile Include="FigureJ.cpp" />

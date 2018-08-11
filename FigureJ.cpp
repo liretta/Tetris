@@ -5,7 +5,7 @@
 
 FigureJ::FigureJ()
 {
-	//create arrey with versions of figure 
+	//create array with versions of figure 
 	pArVersion = new bool**[J_VERSION];
 	for (int i = 0; i < J_VERSION;++i)
 	{

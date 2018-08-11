@@ -1,5 +1,6 @@
 #pragma once
 #include "defines.h"
+#include "Basic_Figure.h"
 #include "Figure.h"
 #include "FigureI.h"
 #include "FigureJ.h"

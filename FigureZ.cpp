@@ -5,7 +5,7 @@
 
 FigureZ::FigureZ()
 {
-	//create arrey with versions of figure 
+	//create array with versions of figure 
 	pArVersion = new bool**[Z_VERSION];
 	for (int i = 0; i < Z_VERSION;++i)
 	{

@@ -1,11 +1,12 @@
 #include "stdafx.h"
+#include "Basic_Figure.h"
 #include "Figure.h"
 
 
-Figure::Figure():iCurVersion(0), iCurTop(0), iCurLeft((BOARDHEIGHT*BOXSIZE)-BOXSIZE), iCurRight(0), iCurBottom(0)
+Figure::Figure() : iCurVersion(0)
 {
-
-}
+	iCurLeft = BOARDHEIGHT * BOXSIZE - BOXSIZE;
+};
 
 Figure::~Figure()
 {
@@ -72,24 +73,12 @@ void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int righ
 
 }
 
-int const Figure::GetTop() { return iCurTop; };
-int const Figure::GetLeft() { return iCurLeft; };
-int const Figure::GetBottom() { return iCurBottom; };
-int const Figure::GetRight() { return iCurRight; };
+
 int const Figure::GetYForDraw() { return iCurYForDraw; };
-
-RECT const Figure::GetFigureRect()
-{
-	RECT temp;
-	temp.top = iCurTop;
-	temp.left = iCurLeft;
-	temp.right = iCurRight;
-	temp.bottom = iCurBottom;
-	return temp;
-	
-};
-
 int const Figure::GetCurVersion() { return iCurVersion; };
+HBRUSH const Figure::GetFigureBrush() { return hRectangelBrush; };
+HPEN const Figure::GetFigurePen() { return hFramePen; };
+
 void Figure::SetNewYCoordinate(int y, int yDraw)
 {
 	iCurTop = y;

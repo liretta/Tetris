@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Figure.h"
+#include "Board.h"
 
 class  DataForFunc
 {
@@ -9,7 +10,11 @@ public:
 	Figure * fNextFigure;
 	bool IsFigureFalling;
 	bool isGameOn;
+	Board * mpBoard;
 
 	DataForFunc();
 	~DataForFunc();	
+	
 };
+
+

@@ -5,7 +5,7 @@
 
 FigureT::FigureT()
 {
-	//create arrey with versions of figure 
+	//create array with versions of figure 
 	pArVersion = new bool**[T_VERSION];
 	for (int i = 0; i < T_VERSION;++i)
 	{

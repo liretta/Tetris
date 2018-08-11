@@ -4,7 +4,7 @@
 
 FigureI::FigureI()
 {
-	//create arrey with versions of figure 
+	//create array with versions of figure 
 	pArVersion = new bool**[I_VERSION];
 	for (int i = 0; i < I_VERSION;++i)
 	{

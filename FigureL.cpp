@@ -5,7 +5,7 @@
 
 FigureL::FigureL()
 {
-	//create arrey with versions of figure 
+	//create array with versions of figure 
 	pArVersion = new bool**[L_VERSION];
 	for (int i = 0; i < L_VERSION;++i)
 	{
