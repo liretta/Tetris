@@ -39,7 +39,7 @@ void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int righ
 	int x = left, y = right;
 	iCurTop = y;
 	iCurLeft = x;
-	//iCurYForDraw = y;
+	iCurYForDraw = 0;
 	for (int i = 0; i < BOXNUMBER; ++i)
 	{
 		y = right;
@@ -48,16 +48,19 @@ void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int righ
 			if (pArVersion[iCurVersion][i][j] == 1)
 			{
 				Rectangle(hDC, x, y, x + BOXSIZE, y + BOXSIZE);
-				iCurYForDraw = y;
+				iCurYForDraw = (iCurYForDraw> y ? iCurYForDraw : y); 
+				//если заполнены 1 и 2, но не заполнен 3 - iCur обнуляется и  теряю строчку...
 			}
 			y += BOXSIZE;
 		}
+		
 		x += BOXSIZE;
 	}
-
+	
 	//проверка - если icur не дно, тогда увеличиваем. сделай тернально
-	iCurYForDraw +=BOXSIZE;
-	y += BOXSIZE; //after loop y = top-point of last box. But we need bottom, so add boxsize
+	iCurYForDraw = (iCurYForDraw == iCurTop+BOXSIZE* BOXNUMBER ? iCurYForDraw : iCurYForDraw +BOXSIZE);
+	 //after loop y = top-point of last box. But we need bottom, so add boxsize if y isn't bottom
+	y = (y == iCurTop + BOXSIZE * BOXNUMBER ? y : y + BOXSIZE);
 	iCurRight = x;
 	iCurBottom = y;
 
