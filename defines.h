@@ -7,21 +7,20 @@ using std::vector;
 #define SET_STRUCT WM_USER+1 //our message TO WndProc
 
 #define FPS 25
-#define BOXSIZE 20 //размер одного квадратика
-#define BOXNUMBER 5 // количество квадратиков в фигуре, включая пустые 
-#define BOARDWIDHT 20 //ширина доски - 20 квадратиков
-#define BOARDHEIGHT 10 //высота доски - 10 квадратиков
-#define WINDOWWIDTH 640 //количество пикселей в ширину 
-#define WINDOWHEIGHT 480 //количество пикселей в высоту
+#define BOXSIZE 20 //size of one box (square)
+#define BOXNUMBER 5 //number of boxes in figure, including empty onse
+#define BOARDWIDTH 10 //width of game board - how many boxes
+#define BOARDHEIGHT 20 //hight of game boxes - how many boxes
+#define WINDOWWIDTH BOARDWIDTH*BOXSIZE //numbers of pixels wide. 640 - in case we need game board + screen with score and screen with next figure 
+#define WINDOWHEIGHT BOARDHEIGHT*BOXSIZE //nubmers of pixels height. 400 - in case we need game board and caption
 
-
-//размер игрового поля в пикселях = BOARDWIDHT * BOXSIZE = 400
+//размер игрового поля в пикселях = BOARDWIDTH * BOXSIZE = 400
 //боковые поля 
-#define XMARGIN = int ((WINDOWWIDTH - BOARDWIDHT * BOXSIZE)/2)
+#define XMARGIN = int ((WINDOWWIDTH - BOARDWIDTH * BOXSIZE)/2)
 //(640 - 400)/2 = 120 - размер правого и левого поля вокруг игрового
 
 //отступ сверху
-#define TOPMARGIN = WINDOWWIDTH - (BOARDWIDHT * BOXSIZE)-5
+#define TOPMARGIN = WINDOWWIDTH - (BOARDWIDTH * BOXSIZE)-5
 
 //quontity of version for each figure
 #define COUNTFIGURE 7 //количество фигурок

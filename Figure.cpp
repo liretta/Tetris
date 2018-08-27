@@ -5,7 +5,9 @@
 
 Figure::Figure() : iCurVersion(0)
 {
-	iCurLeft = BOARDHEIGHT * BOXSIZE - BOXSIZE;
+	iCurLeft = ((BOARDWIDTH * BOXSIZE) / 2) - (BOXNUMBER/2*BOXSIZE); //to place the figure in the board centre, iCurLeft = cent of board - half-figure
+
+	//todo: need to align figure. Add iCurXFor Draw - start left-coordinate by first full box in figure
 };
 
 Figure::~Figure()
@@ -50,7 +52,7 @@ void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int righ
 			{
 				Rectangle(hDC, x, y, x + BOXSIZE, y + BOXSIZE);
 				iCurYForDraw = (iCurYForDraw> y ? iCurYForDraw : y); 
-				//если заполнены 1 и 2, но не заполнен 3 - iCur обнуляется и  теряю строчку...
+				
 			}
 			y += BOXSIZE;
 		}
@@ -58,9 +60,9 @@ void Figure::Draw(HDC &hDCfromMain, HWND &hWnd, int iVersion, int left, int righ
 		x += BOXSIZE;
 	}
 	
-	//проверка - если icur не дно, тогда увеличиваем. сделай тернально
-	iCurYForDraw = (iCurYForDraw == iCurTop+BOXSIZE* BOXNUMBER ? iCurYForDraw : iCurYForDraw +BOXSIZE);
-	 //after loop y = top-point of last box. But we need bottom, so add boxsize if y isn't bottom
+	//проверка - если icur не дно, тогда увеличиваем. 
+	iCurYForDraw = (iCurYForDraw == iCurTop+BOXSIZE*BOXNUMBER ? iCurYForDraw : iCurYForDraw +BOXSIZE);
+	 //after loop y = top-point of last box. But we need bottom, so add boxsize if "y" isn't bottom
 	y = (y == iCurTop + BOXSIZE * BOXNUMBER ? y : y + BOXSIZE);
 	iCurRight = x;
 	iCurBottom = y;

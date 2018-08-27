@@ -3,6 +3,8 @@
 #include "Figure.h"
 #include "Board.h"
 
+class Board;
+
 class  DataForFunc
 {
 public:
@@ -12,7 +14,7 @@ public:
 	bool isGameOn;
 	Board * mpBoard;
 
-	DataForFunc();
+	DataForFunc(); 
 	~DataForFunc();	
 	
 };

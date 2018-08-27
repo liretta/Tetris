@@ -73,42 +73,45 @@ void GetNewFigure(DataForFunc *data)
 
 }
 
-void MoveDown(DataForFunc *pData)
+void MoveDown(HWND &hWnd, DataForFunc *pData)
 {
 	if (pData->isGameOn == true && pData->IsFigureFalling == true)
 	{
 		//int tempY = tempData->fCurFigure->GetBottom();
 		int tempY = pData->fCurFigure->GetYForDraw() + BOXSIZE;
 
+		int topToCheck = pData->fCurFigure->GetTop() + BOXSIZE;
+		int leftToCheck = pData->fCurFigure->GetLeft();
+		bool bChecking = pData->mpBoard->IsValidPosition(pData->fCurFigure, topToCheck, leftToCheck);
 
-		//blank for checking valid pisition on board:
-		//int tempX = tempData->fCurFigure->GetLeft();
-		//int tempTop = tempData->fCurFigure->GetTop() + BOXSIZE;
-		//bool tempBool = tempData->mpBoard->IsValidPosition(tempData->fCurFigure, tempTop, tempX);
-
-
-		if (tempY >height)
+		if (!bChecking)
 		{
-			tempData->IsFigureFalling = false;
-			//function AddToBoard(
-			GetNewFigure(tempData);
-			y = tempData->fCurFigure->GetTop() + BOXSIZE;
-			tempData->fCurFigure->SetNewYCoordinate(y, tempY);
+			pData->IsFigureFalling = false;
+			pData->mpBoard->AddToBoard(pData);
+			GetNewFigure(pData);
+
+			topToCheck = pData->fCurFigure->GetTop() + BOXSIZE;
+			leftToCheck = pData->fCurFigure->GetLeft() + BOXSIZE;
+
+			bChecking = pData->mpBoard->IsValidPosition(pData->fCurFigure, topToCheck, leftToCheck);
+
+			if (!bChecking)
+				pData->isGameOn = false;
+			//here will be called function "Game Over" with finished screen and score
+			else
+			{//int y = pData->fCurFigure->GetTop() + BOXSIZE;
+				tempY = pData->fCurFigure->GetYForDraw() + BOXSIZE;
+
+				pData->fCurFigure->SetNewYCoordinate(topToCheck, tempY);
+
+			}
 		}
 		else
 		{
-			y = tempData->fCurFigure->GetTop() + BOXSIZE;
-			tempData->fCurFigure->SetNewYCoordinate(y, tempY);
-
+			pData->fCurFigure->SetNewYCoordinate(topToCheck, tempY);
 		}
 
-
-		//tempRect.top = tempData->fCurFigure->GetTop(); //
-		//tempRect.left = tempData->fCurFigure->GetLeft();
-		//tempRect.right = tempData->fCurFigure->GetRight();
-		//tempRect.bottom = tempData->fCurFigure->GetBottom();
-
-		//InvalidateRect(hWnd, &tempRect, TRUE);
 		InvalidateRect(hWnd, NULL, TRUE);
+	}
 }
 

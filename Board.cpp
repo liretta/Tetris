@@ -11,14 +11,12 @@ Board::Board()
 	mpArBoardElements = new Node*[BOARDHEIGHT] ();
 	for (int i = 0; i < BOARDHEIGHT;++i)
 	{
-		mpArBoardElements[i] = new Node[BOARDWIDHT]();
+		mpArBoardElements[i] = new Node[BOARDWIDTH]();
 	}
-	iCurRight = BOARDWIDHT * BOXSIZE;
+	iCurRight = BOARDWIDTH * BOXSIZE;
 	iCurBottom = BOARDHEIGHT * BOXSIZE;
 
 };
-
-
 
 Board::~Board()
 {
@@ -40,9 +38,9 @@ void Board::Draw(HDC &hDCfromMain, HWND &hWnd)
 	for (int i = 0; i < BOARDHEIGHT; ++i)
 	{
 		y = iCurLeft;
-		for (int j = 0; j < BOARDWIDHT; ++j)
+		for (int j = 0; j < BOARDWIDTH; ++j)
 		{
-			if (mpArBoardElements[i][j].isEmpty == FULL)
+			if (mpArBoardElements[i][j].isEmpty == false)
 			{	
 				hOldBr = (HBRUSH)SelectObject(hDC, mpArBoardElements[i][j].hBoardElemBrush);
 				hOldPen = (HPEN)SelectObject(hDC, mpArBoardElements[i][j].hFrameBoardElemPen);
@@ -60,6 +58,27 @@ void Board::Draw(HDC &hDCfromMain, HWND &hWnd)
 	ReleaseDC(hWnd, hDC);
 }
 
+//example code from simple WinProj
+
+//hBr = CreateSolidBrush(RGB(pNodesAr[i].R, pNodesAr[i].G, pNodesAr[i].B));
+//hOldBr = (HBRUSH)SelectObject(hdc, hBr);
+//
+//hPen = CreatePen(PS_SOLID, 3, RGB(pNodesAr[i].penR, pNodesAr[i].penG, pNodesAr[i].penB));
+//hOldPen = (HBRUSH)SelectObject(hdc, hPen);
+//
+//Rectangle(hdc, pNodesAr[i].x - pNodesAr[i].nShift,
+//	pNodesAr[i].y - pNodesAr[i].nShift,
+//	pNodesAr[i].x + pNodesAr[i].nShift,
+//	pNodesAr[i].y + pNodesAr[i].nShift);
+//
+///*SelectObject(hdc, hOldBr);
+//DeleteObject(hBr);*/
+//
+//SelectObject(hdc, hOldBr);
+//SelectObject(hdc, hOldPen);
+//DeleteObject(hBr);
+//DeleteObject(hPen);
+
 bool Board::IsValidPosition(Figure *pFigure, int checkTop, int checkLeft)
 {
 	//figure coordinate
@@ -74,10 +93,15 @@ bool Board::IsValidPosition(Figure *pFigure, int checkTop, int checkLeft)
 	int x = iCurLeft, y = iCurTop; //board coordinate
 	bool bCoincidence = false;
 
-	//	until we reach the end of the figure - compare board coordinate & status (empty/full) with coordinate & board 
+	//first checking board bottom and figure bottom-coordinate
+	int tempY = pFigure->GetYForDraw() + BOXSIZE;
+	if (tempY > BOARDHEIGHT*BOXSIZE)
+		return false;
+
+		//	until we reach the end of the figure - compare board coordinate & status (empty/full) with coordinate & board 
 	for (int i = 0; (k != BOXSIZE && i < BOARDHEIGHT) ; ++i)
 	{
-		for (int j = 0; (m != BOXSIZE && j < BOARDWIDHT); ++j)
+		for (int j = 0; (m != BOXSIZE && j < BOARDWIDTH); ++j)
 		{
 			bCoincidence = false;
 			//if (figureTop == x && figureLeft == y && pFigure->pArVersion[figureVersion][i][j] == FULL && mpArBoardElements[i][j].isEmpty == false)//нужно обратиться к конкретному элементу массива фигура и сверить его с элементом доски
@@ -119,12 +143,19 @@ void Board::AddToBoard(DataForFunc * pData)
 	HBRUSH hBrush = pData->fCurFigure->GetFigureBrush();
 	HPEN hPen = pData->fCurFigure->GetFigurePen();
 
-	for(int i = 0; i<BOXNUMBER; ++i)
-		for(int j=0; j < BOXNUMBER; ++j)
+	for (int i = 0; i < BOXNUMBER; ++i)
+	{
+		for (int j = 0; j < BOXNUMBER; ++j)//??разве до бокснамбер??
+		{
 			if (pData->fCurFigure->pArVersion[iVersion][i][j] == FULL)
 			{
-				mpArBoardElements[topFigure / BOXSIZE][leftFigure / BOXSIZE].isEmpty = false;
-				mpArBoardElements[topFigure / BOXSIZE][leftFigure / BOXSIZE].hBoardElemBrush = hBrush;
-				mpArBoardElements[topFigure / BOXSIZE][leftFigure / BOXSIZE].hFrameBoardElemPen = hPen;
+
+				mpArBoardElements[(topFigure / BOXSIZE)][(leftFigure / BOXSIZE)].isEmpty = false;
+				mpArBoardElements[(topFigure / BOXSIZE)][(leftFigure / BOXSIZE)].hBoardElemBrush = hBrush;
+				mpArBoardElements[(topFigure / BOXSIZE)][(leftFigure / BOXSIZE)].hFrameBoardElemPen = hPen;
 			}
-};
+
+		}
+	}
+				
+}

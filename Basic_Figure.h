@@ -7,7 +7,7 @@ class Basic_Figure
 {
 
 public:
-	Basic_Figure(); //дописать как аргументы все члены-переменные
+	Basic_Figure(); 
 	virtual ~Basic_Figure() = 0;
 	int const GetTop();
 	int const GetLeft();

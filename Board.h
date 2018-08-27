@@ -4,6 +4,8 @@
 #include "Figure.h"
 #include "StructWithDataToWnd.h"
 
+class DataForFunc;
+
 struct Node //Node in board
 {
 	bool isEmpty;
